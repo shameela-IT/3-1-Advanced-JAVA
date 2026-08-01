@@ -23,10 +23,23 @@ public class UResultSet {
             // Execute Query
             ResultSet rs = st.executeQuery("SELECT * FROM Student");
 
+            // Display records before update
+            System.out.println("STUDENT TABLE BEFORE UPDATE");
+            System.out.println("-------------------------------------------");
+            System.out.printf("%-10s %-15s %-15s\n", "RollNo", "Name", "Address");
+            System.out.println("-------------------------------------------");
+
+            while (rs.next()) {
+                System.out.printf("%-10d %-15s %-15s\n",
+                        rs.getInt("RollNo"),
+                        rs.getString("Name"),
+                        rs.getString("Address"));
+            }
+
             // Delete last row
             rs.last();
             rs.deleteRow();
-            System.out.println("Last student record deleted successfully.");
+            System.out.println("\nLast student record deleted successfully.");
 
             // Insert new row
             rs.moveToInsertRow();
@@ -34,8 +47,22 @@ public class UResultSet {
             rs.updateString("Name", "John Doe");
             rs.updateString("Address", "Hyderabad");
             rs.insertRow();
-
             System.out.println("New student record inserted successfully.");
+
+            // Display records after update
+            rs = st.executeQuery("SELECT * FROM Student");
+
+            System.out.println("\nSTUDENT TABLE AFTER UPDATE");
+            System.out.println("-------------------------------------------");
+            System.out.printf("%-10s %-15s %-15s\n", "RollNo", "Name", "Address");
+            System.out.println("-------------------------------------------");
+
+            while (rs.next()) {
+                System.out.printf("%-10d %-15s %-15s\n",
+                        rs.getInt("RollNo"),
+                        rs.getString("Name"),
+                        rs.getString("Address"));
+            }
 
             rs.close();
             st.close();
